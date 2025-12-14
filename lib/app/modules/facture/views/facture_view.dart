@@ -12,11 +12,15 @@ class FactureView extends GetView<FactureController> {
   @override
   Widget build(BuildContext context) {
     return AppLayout(
-      currentIndex: 2,
+      currentIndex: -1,
+      showBottomNav: false,
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         elevation: 0,
-        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: AppColors.secondaryColor),
+          onPressed: () => Get.back(),
+        ),
         title: Row(
           children: [
             Container(

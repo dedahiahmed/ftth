@@ -78,6 +78,9 @@ class ServicesController extends GetxController {
       case 'demandes':
         Get.toNamed('/demandes');
         break;
+      case 'invoices':
+        Get.toNamed('/facture');
+        break;
       case 'modem_purchase':
         Get.toNamed('/service-request', arguments: {'type': 'achat_modem'});
         break;

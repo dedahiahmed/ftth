@@ -416,9 +416,10 @@ class HomeView extends GetView<HomeController> {
   Widget _buildFTTHPackageCard(Map<String, dynamic> package) {
     final color = Color(package['color'] as int);
     final isPopular = package['popular'] as bool;
+    final features = (package['features'] as List<String>).take(4).toList();
 
     return Container(
-      width: 240.w,
+      width: 220.w,
       margin: EdgeInsets.only(right: 16.w),
       decoration: BoxDecoration(
         color: AppColors.secondaryColor,
@@ -438,7 +439,7 @@ class HomeView extends GetView<HomeController> {
               // Header with speed
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(20.r),
+                padding: EdgeInsets.all(16.r),
                 decoration: BoxDecoration(
                   color: color,
                   borderRadius: BorderRadius.only(
@@ -453,45 +454,45 @@ class HomeView extends GetView<HomeController> {
                       package['name'] as String,
                       style: TextStyle(
                         color: AppColors.secondaryColor,
-                        fontSize: 18.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8.h),
+                    SizedBox(height: 6.h),
                     Row(
                       children: [
                         Icon(
                           Icons.speed,
                           color: AppColors.secondaryColor,
-                          size: 24.sp,
+                          size: 20.sp,
                         ),
-                        SizedBox(width: 8.w),
+                        SizedBox(width: 6.w),
                         Text(
                           package['speed'] as String,
                           style: TextStyle(
                             color: AppColors.secondaryColor,
-                            fontSize: 22.sp,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 12.h),
+                    SizedBox(height: 10.h),
                     Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 14.w,
-                        vertical: 8.h,
+                        horizontal: 12.w,
+                        vertical: 6.h,
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.secondaryColor,
-                        borderRadius: BorderRadius.circular(10.r),
+                        borderRadius: BorderRadius.circular(8.r),
                       ),
                       child: Text(
                         '${package['price']} MRU/mois',
                         style: TextStyle(
                           color: color,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16.sp,
+                          fontSize: 14.sp,
                         ),
                       ),
                     ),
@@ -501,19 +502,19 @@ class HomeView extends GetView<HomeController> {
               // Features
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.all(16.r),
+                  padding: EdgeInsets.all(12.r),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ...(package['features'] as List<String>).map((feature) {
+                      ...features.map((feature) {
                         return Padding(
-                          padding: EdgeInsets.only(bottom: 8.h),
+                          padding: EdgeInsets.only(bottom: 6.h),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 margin: EdgeInsets.only(top: 2.h),
-                                padding: EdgeInsets.all(3.r),
+                                padding: EdgeInsets.all(2.r),
                                 decoration: BoxDecoration(
                                   color: color,
                                   shape: BoxShape.circle,
@@ -521,15 +522,15 @@ class HomeView extends GetView<HomeController> {
                                 child: Icon(
                                   Icons.check,
                                   color: AppColors.secondaryColor,
-                                  size: 10.sp,
+                                  size: 8.sp,
                                 ),
                               ),
-                              SizedBox(width: 10.w),
+                              SizedBox(width: 8.w),
                               Expanded(
                                 child: Text(
                                   feature,
                                   style: TextStyle(
-                                    fontSize: 12.sp,
+                                    fontSize: 11.sp,
                                     color: Colors.black87,
                                   ),
                                 ),
@@ -547,15 +548,15 @@ class HomeView extends GetView<HomeController> {
                             backgroundColor: color,
                             foregroundColor: AppColors.secondaryColor,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
+                              borderRadius: BorderRadius.circular(10.r),
                             ),
-                            padding: EdgeInsets.symmetric(vertical: 14.h),
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
                           ),
                           child: Text(
                             'Souscrire',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 15.sp,
+                              fontSize: 14.sp,
                             ),
                           ),
                         ),
@@ -569,24 +570,24 @@ class HomeView extends GetView<HomeController> {
           // Popular badge
           if (isPopular)
             Positioned(
-              top: 12.h,
-              right: 12.w,
+              top: 10.h,
+              right: 10.w,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
                 decoration: BoxDecoration(
                   color: Colors.amber,
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.star, color: Colors.white, size: 14.sp),
-                    SizedBox(width: 4.w),
+                    Icon(Icons.star, color: Colors.white, size: 12.sp),
+                    SizedBox(width: 3.w),
                     Text(
                       'Populaire',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 10.sp,
+                        fontSize: 9.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
