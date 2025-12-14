@@ -7,6 +7,9 @@ abstract class Routes {
   static const SUBSCRIPTION = _Paths.SUBSCRIPTION;
   static const LOGIN = _Paths.LOGIN;
   static const DEMANDES = _Paths.DEMANDES;
+  static const SERVICE_REQUEST = _Paths.SERVICE_REQUEST;
+  static const SPEED_CHANGE = _Paths.SPEED_CHANGE;
+  static const FACTURE = _Paths.FACTURE;
 }
 
 abstract class _Paths {
@@ -16,4 +19,7 @@ abstract class _Paths {
   static const SUBSCRIPTION = '/subscription';
   static const LOGIN = '/login';
   static const DEMANDES = '/demandes';
+  static const SERVICE_REQUEST = '/service-request';
+  static const SPEED_CHANGE = '/speed-change';
+  static const FACTURE = '/facture';
 }

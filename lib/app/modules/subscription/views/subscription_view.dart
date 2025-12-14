@@ -219,6 +219,13 @@ class SubscriptionView extends GetView<SubscriptionController> {
                     items: controller.packages,
                     onChanged: (value) => controller.package.value = value,
                   ),
+                  // Pricing summary
+                  Obx(() {
+                    if (controller.package.value != null) {
+                      return _buildPricingSummary(controller.package.value!);
+                    }
+                    return const SizedBox.shrink();
+                  }),
                   Obx(() {
                     if (controller.package.value == 'Autre débit') {
                       return Column(
@@ -563,6 +570,116 @@ class SubscriptionView extends GetView<SubscriptionController> {
           }
           return const SizedBox.shrink();
         }),
+      ],
+    );
+  }
+
+  Widget _buildPricingSummary(String package) {
+    int monthlyPrice = 0;
+    String speed = '';
+
+    if (package.contains('100')) {
+      monthlyPrice = 1500;
+      speed = '100 Mbps';
+    } else if (package.contains('200')) {
+      monthlyPrice = 2500;
+      speed = '200 Mbps';
+    } else if (package.contains('500')) {
+      monthlyPrice = 4000;
+      speed = '500 Mbps';
+    }
+
+    const int installationFee = SubscriptionController.installationFee;
+    final totalFirstPayment = monthlyPrice + installationFee;
+
+    return Container(
+      margin: EdgeInsets.only(top: 12.h),
+      padding: EdgeInsets.all(16.r),
+      decoration: BoxDecoration(
+        color: Colors.green.shade50,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: Colors.green.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.monetization_on, color: Colors.green, size: 20.sp),
+              SizedBox(width: 8.w),
+              Text(
+                'Récapitulatif tarifaire',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14.sp,
+                  color: Colors.green.shade700,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 12.h),
+          _buildPriceRow('Forfait', speed, '$monthlyPrice MRU/mois'),
+          SizedBox(height: 8.h),
+          _buildPriceRow('Frais d\'installation', '', '$installationFee MRU'),
+          Divider(color: Colors.green.shade200, height: 20.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Total 1er paiement',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14.sp,
+                  color: Colors.black87,
+                ),
+              ),
+              Text(
+                '$totalFirstPayment MRU',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.sp,
+                  color: Colors.green.shade700,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPriceRow(String label, String detail, String price) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 13.sp,
+                color: Colors.black87,
+              ),
+            ),
+            if (detail.isNotEmpty)
+              Text(
+                detail,
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  color: Colors.grey[600],
+                ),
+              ),
+          ],
+        ),
+        Text(
+          price,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 13.sp,
+            color: Colors.black87,
+          ),
+        ),
       ],
     );
   }

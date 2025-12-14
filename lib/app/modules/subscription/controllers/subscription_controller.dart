@@ -48,10 +48,13 @@ class SubscriptionController extends GetxController {
   final billTypes = ['SOMELEC', 'SNDE'];
 
   final packages = [
-    'Fiber 100 - 100 Mbps',
-    'Fiber 200 - 200 Mbps',
-    'Fiber 500 - 500 Mbps',
+    '100 Mbps - 1500 MRU/mois',
+    '200 Mbps - 2500 MRU/mois',
+    '500 Mbps - 4000 MRU/mois',
   ];
+
+  // Installation fee is always 1000 MRU
+  static const int installationFee = 1000;
 
   @override
   void onInit() {

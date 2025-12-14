@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ftth/main.dart';
 import 'package:ftth/app/widgets/app_layout.dart';
+import 'package:ftth/app/widgets/notification_badge.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -63,6 +64,7 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
       actions: [
+        const NotificationBadge(),
         Padding(
           padding: EdgeInsets.only(right: 16.w),
           child: Image.asset(

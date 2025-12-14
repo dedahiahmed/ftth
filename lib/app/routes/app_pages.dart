@@ -10,6 +10,12 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/demandes/bindings/demandes_binding.dart';
 import '../modules/demandes/views/demandes_view.dart';
+import '../modules/service_request/bindings/service_request_binding.dart';
+import '../modules/service_request/views/service_request_view.dart';
+import '../modules/speed_change/bindings/speed_change_binding.dart';
+import '../modules/speed_change/views/speed_change_view.dart';
+import '../modules/facture/bindings/facture_binding.dart';
+import '../modules/facture/views/facture_view.dart';
 
 part 'app_routes.dart';
 
@@ -43,6 +49,21 @@ class AppPages {
       name: _Paths.DEMANDES,
       page: () => const DemandesView(),
       binding: DemandesBinding(),
+    ),
+    GetPage(
+      name: _Paths.SERVICE_REQUEST,
+      page: () => const ServiceRequestView(),
+      binding: ServiceRequestBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPEED_CHANGE,
+      page: () => const SpeedChangeView(),
+      binding: SpeedChangeBinding(),
+    ),
+    GetPage(
+      name: _Paths.FACTURE,
+      page: () => const FactureView(),
+      binding: FactureBinding(),
     ),
   ];
 }

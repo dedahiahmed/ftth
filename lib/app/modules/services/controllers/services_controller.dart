@@ -25,12 +25,6 @@ class ServicesController extends GetxController {
         'route': 'invoices',
       },
       {
-        'icon': 'wifi',
-        'title': 'Forfaits FTTH',
-        'color': Colors.red,
-        'route': 'packages',
-      },
-      {
         'icon': 'add_circle',
         'title': 'Abonnement FTTH',
         'color': Colors.green,
@@ -83,6 +77,21 @@ class ServicesController extends GetxController {
         break;
       case 'demandes':
         Get.toNamed('/demandes');
+        break;
+      case 'modem_purchase':
+        Get.toNamed('/service-request', arguments: {'type': 'achat_modem'});
+        break;
+      case 'line_transfer':
+        Get.toNamed('/service-request', arguments: {'type': 'transfert_ligne'});
+        break;
+      case 'speed_change':
+        Get.toNamed('/speed-change');
+        break;
+      case 'public_ip':
+        Get.toNamed('/service-request', arguments: {'type': 'ip_publique'});
+        break;
+      case 'voip':
+        Get.toNamed('/service-request', arguments: {'type': 'voip'});
         break;
       default:
         Get.snackbar(

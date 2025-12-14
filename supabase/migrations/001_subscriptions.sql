@@ -2,7 +2,8 @@
 CREATE TYPE subscription_type AS ENUM ('FTTH');
 
 -- Create subscription status enum
-CREATE TYPE subscription_status AS ENUM ('en_cours_de_traitement', 'active', 'inactive');
+-- Flow: en_cours_de_traitement -> equipe_en_route -> active -> inactive
+CREATE TYPE subscription_status AS ENUM ('en_cours_de_traitement', 'equipe_en_route', 'active', 'inactive');
 
 -- Create subscriptions table
 CREATE TABLE subscriptions (

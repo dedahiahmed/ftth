@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ftth/app/routes/app_pages.dart';
 import 'package:ftth/app/services/auth_service.dart';
 import 'package:ftth/app/services/form_persistence_service.dart';
+import 'package:ftth/app/services/notification_service.dart';
 import 'package:get/get.dart';
 import 'package:ftth/app/configs/dev.dart' as dev;
 import 'package:logger/logger.dart';
@@ -59,6 +60,7 @@ void main() async {
   // Initialize GetX services
   Get.put(AuthService(), permanent: true);
   Get.put(FormPersistenceService(), permanent: true);
+  Get.put(NotificationService(), permanent: true);
 
   // Keep preferred orientations
   SystemChrome.setPreferredOrientations([
