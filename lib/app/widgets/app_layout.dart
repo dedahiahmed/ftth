@@ -54,16 +54,6 @@ class AppLayout extends StatelessWidget {
             label: 'Accueil',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt_outlined),
-            activeIcon: Icon(Icons.list_alt),
-            label: 'Demandes',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long_outlined),
-            activeIcon: Icon(Icons.receipt_long),
-            label: 'Factures',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_outlined),
             activeIcon: Icon(Icons.grid_view),
             label: 'Services',
@@ -82,16 +72,6 @@ class AppLayout extends StatelessWidget {
         break;
       case 1:
         if (currentIndex != 1) {
-          Get.offAllNamed('/demandes');
-        }
-        break;
-      case 2:
-        if (currentIndex != 2) {
-          Get.offAllNamed('/facture');
-        }
-        break;
-      case 3:
-        if (currentIndex != 3) {
           Get.offAllNamed('/services');
         }
         break;
@@ -135,16 +115,6 @@ class AppNavBar extends StatelessWidget {
             label: 'Accueil',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt_outlined),
-            activeIcon: Icon(Icons.list_alt),
-            label: 'Demandes',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long_outlined),
-            activeIcon: Icon(Icons.receipt_long),
-            label: 'Factures',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_outlined),
             activeIcon: Icon(Icons.grid_view),
             label: 'Services',
@@ -163,16 +133,6 @@ class AppNavBar extends StatelessWidget {
         break;
       case 1:
         if (currentIndex != 1) {
-          Get.offAllNamed('/demandes');
-        }
-        break;
-      case 2:
-        if (currentIndex != 2) {
-          Get.offAllNamed('/facture');
-        }
-        break;
-      case 3:
-        if (currentIndex != 3) {
           Get.offAllNamed('/services');
         }
         break;

@@ -12,7 +12,7 @@ class ServicesView extends GetView<ServicesController> {
   @override
   Widget build(BuildContext context) {
     return AppLayout(
-      currentIndex: 3,
+      currentIndex: 1,
       appBar: _buildAppBar(),
       child: SafeArea(
         child: Padding(

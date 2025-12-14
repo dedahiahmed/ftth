@@ -34,7 +34,7 @@ class HomeView extends GetView<HomeController> {
                 SizedBox(height: 24.h),
                 _buildQuickServicesSection(),
                 SizedBox(height: 24.h),
-                _buildPackagesSection(),
+                _buildFTTHPackagesSection(),
                 SizedBox(height: 32.h),
               ],
             ),
@@ -242,7 +242,7 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () => controller.navigateToServices(),
                 child: Text(
                   'Voir tout',
                   style: TextStyle(
@@ -291,13 +291,17 @@ class HomeView extends GetView<HomeController> {
           return Icons.report_problem_outlined;
         case 'phone':
           return Icons.phone;
+        case 'speed':
+          return Icons.speed;
+        case 'language':
+          return Icons.language;
         default:
           return Icons.apps;
       }
     }
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () => controller.navigateToQuickAction(action),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.secondaryColor,
@@ -343,46 +347,7 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildPackagesSection() {
-    final packages = [
-      {
-        'name': 'Basic',
-        'speed': '10 Mbps',
-        'price': '5000',
-        'color': Colors.teal,
-        'features': [
-          'Internet illimité',
-          'Support 24/7',
-          'Installation gratuite',
-        ],
-      },
-      {
-        'name': 'Standard',
-        'speed': '25 Mbps',
-        'price': '10000',
-        'color': AppColors.primaryColor,
-        'features': [
-          'Internet illimité',
-          'Support prioritaire',
-          'Installation gratuite',
-          'Router inclus',
-        ],
-      },
-      {
-        'name': 'Premium',
-        'speed': '50 Mbps',
-        'price': '20000',
-        'color': Colors.orange,
-        'features': [
-          'Internet illimité',
-          'Support VIP',
-          'Installation gratuite',
-          'Router premium',
-          'IP fixe',
-        ],
-      },
-    ];
-
+  Widget _buildFTTHPackagesSection() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
@@ -391,16 +356,36 @@ class HomeView extends GetView<HomeController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Forfaits recommandés',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.sp,
-                  color: Colors.black87,
-                ),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(6.r),
+                    ),
+                    child: Text(
+                      'FTTH',
+                      style: TextStyle(
+                        color: AppColors.secondaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  Text(
+                    'Forfaits',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () => controller.navigateToServices(),
                 child: Text(
                   'Voir tout',
                   style: TextStyle(
@@ -414,23 +399,26 @@ class HomeView extends GetView<HomeController> {
           ),
           SizedBox(height: 12.h),
           SizedBox(
-            height: 320.h,
-            child: ListView.builder(
+            height: 380.h,
+            child: Obx(() => ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: packages.length,
+              itemCount: controller.ftthPackages.length,
               itemBuilder: (context, index) {
-                return _buildPackageCard(packages[index]);
+                return _buildFTTHPackageCard(controller.ftthPackages[index]);
               },
-            ),
+            )),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildPackageCard(Map<String, dynamic> package) {
+  Widget _buildFTTHPackageCard(Map<String, dynamic> package) {
+    final color = Color(package['color'] as int);
+    final isPopular = package['popular'] as bool;
+
     return Container(
-      width: 220.w,
+      width: 240.w,
       margin: EdgeInsets.only(right: 16.w),
       decoration: BoxDecoration(
         color: AppColors.secondaryColor,
@@ -443,136 +431,169 @@ class HomeView extends GetView<HomeController> {
           ),
         ],
       ),
-      child: Column(
+      child: Stack(
         children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(16.r),
-            decoration: BoxDecoration(
-              color: package['color'] as Color,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.r),
-                topRight: Radius.circular(20.r),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  package['name'] as String,
-                  style: TextStyle(
-                    color: AppColors.secondaryColor,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
+          Column(
+            children: [
+              // Header with speed
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(20.r),
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.r),
+                    topRight: Radius.circular(20.r),
                   ),
                 ),
-                SizedBox(height: 8.h),
-                Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.speed,
-                      color: AppColors.secondaryColor,
-                      size: 20.sp,
+                    Text(
+                      package['name'] as String,
+                      style: TextStyle(
+                        color: AppColors.secondaryColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    SizedBox(width: 8.w),
+                    SizedBox(height: 8.h),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.speed,
+                          color: AppColors.secondaryColor,
+                          size: 24.sp,
+                        ),
+                        SizedBox(width: 8.w),
+                        Text(
+                          package['speed'] as String,
+                          style: TextStyle(
+                            color: AppColors.secondaryColor,
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12.h),
                     Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 10.w,
-                        vertical: 4.h,
+                        horizontal: 14.w,
+                        vertical: 8.h,
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.secondaryColor,
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: Text(
                         '${package['price']} MRU/mois',
                         style: TextStyle(
-                          color: package['color'] as Color,
+                          color: color,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
+                          fontSize: 16.sp,
                         ),
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(16.r),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Caractéristiques',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  ...(package['features'] as List<String>).map((feature) {
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 6.h),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(2.r),
-                            decoration: const BoxDecoration(
-                              color: Colors.green,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              Icons.check,
-                              color: AppColors.secondaryColor,
-                              size: 12.sp,
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Expanded(
-                            child: Text(
-                              feature,
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black87,
+              ),
+              // Features
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(16.r),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...(package['features'] as List<String>).map((feature) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 8.h),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 2.h),
+                                padding: EdgeInsets.all(3.r),
+                                decoration: BoxDecoration(
+                                  color: color,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.check,
+                                  color: AppColors.secondaryColor,
+                                  size: 10.sp,
+                                ),
                               ),
+                              SizedBox(width: 10.w),
+                              Expanded(
+                                child: Text(
+                                  feature,
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                      const Spacer(),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () => controller.subscribeToPackage(package),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: color,
+                            foregroundColor: AppColors.secondaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            padding: EdgeInsets.symmetric(vertical: 14.h),
+                          ),
+                          child: Text(
+                            'Souscrire',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.sp,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    );
-                  }),
-                  const Spacer(),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: package['color'] as Color,
-                        side: BorderSide(
-                          color: package['color'] as Color,
-                          width: 2,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 10.h),
-                      ),
-                      child: Text(
-                        'Souscrire',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.sp,
-                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // Popular badge
+          if (isPopular)
+            Positioned(
+              top: 12.h,
+              right: 12.w,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.star, color: Colors.white, size: 14.sp),
+                    SizedBox(width: 4.w),
+                    Text(
+                      'Populaire',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
