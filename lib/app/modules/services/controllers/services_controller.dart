@@ -16,9 +16,9 @@ class ServicesController extends GetxController {
         'icon': 'list_alt',
         'title': 'Mes demandes',
         'color': Colors.teal,
-        'route': 'requests',
+        'route': 'demandes',
       },
-        {
+      {
         'icon': 'receipt',
         'title': 'Factures',
         'color': Colors.deepOrange,
@@ -36,7 +36,7 @@ class ServicesController extends GetxController {
         'color': Colors.green,
         'route': 'subscription',
       },
-    
+
       {
         'icon': 'report_problem',
         'title': 'Signaler un problème',
@@ -77,11 +77,19 @@ class ServicesController extends GetxController {
   }
 
   void navigateToService(String route) {
-    // TODO: Implement navigation to specific service screens
-    Get.snackbar(
-      'Service',
-      'Navigation vers: $route',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    switch (route) {
+      case 'subscription':
+        Get.toNamed('/subscription');
+        break;
+      case 'demandes':
+        Get.toNamed('/demandes');
+        break;
+      default:
+        Get.snackbar(
+          'Service',
+          'Navigation vers: $route',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+    }
   }
 }

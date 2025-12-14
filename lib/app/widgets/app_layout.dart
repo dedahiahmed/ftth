@@ -54,6 +54,11 @@ class AppLayout extends StatelessWidget {
             label: 'Accueil',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt_outlined),
+            activeIcon: Icon(Icons.list_alt),
+            label: 'Demandes',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_outlined),
             activeIcon: Icon(Icons.grid_view),
             label: 'Services',
@@ -77,11 +82,16 @@ class AppLayout extends StatelessWidget {
         break;
       case 1:
         if (currentIndex != 1) {
-          Get.offAllNamed('/services');
+          Get.offAllNamed('/demandes');
         }
         break;
       case 2:
         if (currentIndex != 2) {
+          Get.offAllNamed('/services');
+        }
+        break;
+      case 3:
+        if (currentIndex != 3) {
           Get.offAllNamed('/more');
         }
         break;
